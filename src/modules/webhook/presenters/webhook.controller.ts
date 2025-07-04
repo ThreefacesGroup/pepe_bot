@@ -1,5 +1,6 @@
 import {Body, Controller, Logger, Post} from '@nestjs/common';
 import { WebhookService } from '../application/webhook.service';
+import {WhatsAppEventDto} from "../application/webhook.interfaces";
 
 @Controller('webhooks')
 export class WebhookController {
@@ -7,8 +8,9 @@ export class WebhookController {
   constructor(private readonly webhookService: WebhookService) {}
 
   @Post(':id')
-   handleWebhook(@Body() body: any) {
-    this._logger.log(body)
-      return { success: true}
+  async handleWebhook(@Body() body: WhatsAppEventDto) {
+      if(body.event === 'message') {
+           await this.webhookService.handleWebhook(body)
+       }
   }
 }

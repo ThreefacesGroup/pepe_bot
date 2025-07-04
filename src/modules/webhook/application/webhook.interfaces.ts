@@ -1,27 +1,50 @@
-/**
- * Interface for the webhook request body
- */
-export interface WebhookRequestBody {
-  instanceId: string;
+export class WhatsAppEventDto {
   event: string;
-  data: WebhookEventData;
-}
-
-/**
- * Interface for the webhook event data
- */
-export interface WebhookEventData {
-  message?: MessageData;
-  [key: string]: any;
-}
-
-/**
- * Interface for message data
- */
-export interface MessageData {
-  type: string;
-  from: string;
-  timestamp: number;
-  body: string;
-  [key: string]: any;
+  instanceId: string;
+  data: {
+    message: {
+      _data: {
+        id: {
+          fromMe: boolean;
+          remote: string;
+          id: string;
+          _serialized: string;
+        };
+        viewed: boolean;
+        body: string;
+        type: string;
+        t: number; // timestamp
+        notifyName?: string;
+        from: string;
+        to: string;
+        ack: number;
+        isNewMsg: boolean;
+        isForwarded: boolean;
+        hasReaction: boolean;
+        mentionedJidList: string[];
+        groupMentions: string[];
+        links: string[];
+      };
+      id: {
+        fromMe: boolean;
+        remote: string;
+        id: string;
+        _serialized: string;
+      };
+      body: string;
+      type: string;
+      timestamp: number;
+      from: string;
+      to: string;
+      deviceType: string;
+      isForwarded: boolean;
+      hasMedia: boolean;
+      isStarred: boolean;
+      hasQuotedMsg: boolean;
+      mentionedIds: string[];
+      groupMentions: string[];
+      links: string[];
+    };
+    media: any;
+  };
 }

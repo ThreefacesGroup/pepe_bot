@@ -24,13 +24,37 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A WhatsApp bot built with [Nest](https://github.com/nestjs/nest) framework that uses OpenAI to generate responses to user messages.
+
+### Features
+
+- Receives messages from WhatsApp via webhooks
+- Processes messages using OpenAI's GPT models
+- Sends AI-generated responses back to the user via WhatsApp
+- Configurable through environment variables
 
 ## Project setup
+
+1. Install dependencies:
 
 ```bash
 $ yarn install
 ```
+
+2. Configure environment variables:
+
+Copy the `.env.example` file to `.env` and update the values:
+
+```bash
+$ cp .env.example .env
+```
+
+Required environment variables:
+
+- `OPENAI_API_KEY`: Your OpenAI API key
+- `WHATSAPP_API_URL`: The URL of your WhatsApp API service
+- `WHATSAPP_API_TOKEN`: Authentication token for the WhatsApp API
+- `PORT`: The port on which the server will run (default: 3000)
 
 ## Compile and run the project
 
@@ -57,6 +81,29 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
+
+## Usage
+
+### Webhook Setup
+
+To use this bot, you need to configure your WhatsApp API service to send webhook events to this application. The webhook endpoint is:
+
+```
+POST /webhooks/:id
+```
+
+Where `:id` is an identifier for the webhook (can be any string).
+
+### How It Works
+
+1. When a user sends a message to your WhatsApp number, the WhatsApp API service will send a webhook event to this application.
+2. The application will extract the message content and sender information.
+3. The message will be sent to OpenAI's API to generate a response.
+4. The response will be sent back to the user via the WhatsApp API.
+
+### Customizing the Bot
+
+You can customize the bot's behavior by modifying the `generateAIResponse` method in the `WebhookService` class. For example, you can change the system prompt or the model used for generating responses.
 
 ## Deployment
 
